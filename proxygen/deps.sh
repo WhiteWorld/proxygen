@@ -26,7 +26,7 @@ trap 'cd $start_dir' EXIT
 cd "$(dirname "$0")"
 
 # Some extra dependencies for Ubuntu 13.10 and 14.04
-sudo apt-get install -yq \
+ apt-get install -yq \
     git \
     cmake \
     g++ \
@@ -51,7 +51,7 @@ sudo apt-get install -yq \
 # Adding support for Ubuntu 12.04.x
 # Needs libdouble-conversion-dev, google-gflags and double-conversion
 # deps.sh in folly builds anyways (no trap there)
-if ! sudo apt-get install -y libgoogle-glog-dev;
+if !  apt-get install -y libgoogle-glog-dev;
 then
   if [ ! -e google-glog ]; then
     echo "fetching glog from svn (apt-get failed)"
@@ -60,12 +60,12 @@ then
       cd google-glog
       ./configure
       make
-      sudo make install
+       make install
     )
   fi
 fi
 
-if ! sudo apt-get install -y libgflags-dev;
+if !  apt-get install -y libgflags-dev;
 then
   if [ ! -e google-gflags ]; then
     echo "Fetching gflags from svn (apt-get failed)"
@@ -74,12 +74,12 @@ then
       cd google-gflags
       ./configure
       make
-      sudo make install
+       make install
     )
   fi
 fi
 
-if  ! sudo apt-get install -y libdouble-conversion-dev;
+if  !  apt-get install -y libdouble-conversion-dev;
 then
   if [ ! -e double-conversion ]; then
     echo "Fetching double-conversion from git (apt-get failed)"
@@ -87,7 +87,7 @@ then
     (
       cd double-conversion
       cmake . -DBUILD_SHARED_LIBS=ON
-      sudo make install
+       make install
     )
   fi
 fi
@@ -106,7 +106,7 @@ git checkout master
 autoreconf --install
 ./configure
 make -j$JOBS
-sudo make install
+ make install
 
 if test $? -ne 0; then
   echo "fatal: folly build failed"
@@ -126,7 +126,7 @@ git checkout master
 # Build wangle
 cmake .
 make -j$JOBS
-sudo make install
+ make install
 
 if test $? -ne 0; then
   echo "fatal: wangle build failed"
@@ -143,4 +143,4 @@ make -j$JOBS
 LD_LIBRARY_PATH=/usr/local/lib make check
 
 # Install the libs
-sudo make install
+ make install
